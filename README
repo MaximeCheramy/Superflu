@@ -1,1 +1,8 @@
-Superflu !
+Superflu est un serious game dont l'objectif est d'endiguer la progression d'une
+ épidémie. Initialement développé en Java, ce projet vise à le porter en 
+JavaScript pour qu'il soit plus facile d'accès.
+
+Le code du jeu original est disponible ici : https://github.com/Addict7/SuperFlu
+
+Il a été développé en seulement 3 jours dans le cadre d'un module d'introduction
+ à la programmation de jeux vidéos.
