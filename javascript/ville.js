@@ -72,6 +72,14 @@ exports.Ville.prototype.update_habitants = function() {
 		
 		// Perte d'immunité 
 		this.habitantsImmunises -= Math.round(this.habitantsImmunises * perteImmunite);
+		
+		// Immunisation
+		if (this.stocksVaccins > 0) {
+				var nouveauxHabitantsImmunises = Math.min(this.habitantsSains, this.stocksVaccins);
+				this.stocksVaccins -= nouveauxHabitantsImmunises;
+				this.habitantsSains -= nouveauxHabitantsImmunises;
+				this.habitantsImmunises += nouveauxHabitantsImmunises;
+		}
 
 		// Mortalité 
 		var nouveauxHabitantsMorts = Math.round(this.habitantsInfectes * mortalite);
