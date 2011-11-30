@@ -5,12 +5,14 @@
 <!-- Styling -->
     <style type=text/css>
         body{
-           background:#fff;
+           background:#000;
+					 background-image: url("images/fond_carte.png");
            color:#222;
-           margin:1em 0 2em 6em;
+           margin:0;
            padding:0;
         }
         #gjs-loader {
+						margin: auto;
             width: 50%;
             height: 50%;
             background: url('./public/ajax-loader.gif');
@@ -30,7 +32,9 @@
         <div id="gjs-loader">
          Chargement...
         </div>
-        <canvas id="gjs-canvas"></canvas>
+				<div style="text-align: center;">
+					<canvas id="gjs-canvas"></canvas>
+				</div>
     </div>
 </body>
 </html>

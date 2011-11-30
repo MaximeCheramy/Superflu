@@ -25,11 +25,9 @@ function chargeVilles(gameLogic) {
 }
 
 function buildMap() {
-	var fond_carte = gamejs.image.load("images/fond_carte.png");
 	var carte = gamejs.image.load("images/carte.png");
 
 	var background = new gamejs.Surface(1024, 545);
-	background.blit(fond_carte);
 	background.blit(carte);
 
 	// Pour l'instant on affecte toutes les zones.
@@ -140,8 +138,7 @@ function main() {
 }
 
 
-gamejs.preload(["images/fond_carte.png",
-								"images/carte_eur.png",
+gamejs.preload(["images/carte_eur.png",
 								"images/carte_us.png",
 								"images/carte_ams.png",
 								"images/carte_afr.png",
