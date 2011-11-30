@@ -1,4 +1,5 @@
 var gamejs = require('gamejs');
+var draw = require('gamejs/draw');
 
 exports.Ville = function(gameLogic, usine, zone, nom, x, y) {
 	exports.Ville.superConstructor.apply(this, arguments);
@@ -13,13 +14,18 @@ exports.Ville = function(gameLogic, usine, zone, nom, x, y) {
 		this.imageVilleHL = gamejs.image.load("images/HL_ville.png");
 	}
 	this.image = this.imageVille;
-	var width = this.imageVille.getSize()[0];
-	var height = this.imageVille.getSize()[1];
+	this.width = this.imageVille.getSize()[0];
+	this.height = this.imageVille.getSize()[1];
 
-	this.rect = new gamejs.Rect(x-width/2,y-height/2, width, height);
+	this.rect = new gamejs.Rect(x-this.width/2,y-this.height/2, this.width, this.height);
 
 	this.stockVaccins = 0;
 	this.stockTraitements = 0;
+
+	this.habitantsSains = 200000 + Math.floor(Math.random() * 300000);
+	this.habitantsInfectes = 0;
+	this.habitantsImmunises = 0;
+	this.habitantsMorts = 0;
 
 	return this;
 }
@@ -46,4 +52,16 @@ exports.Ville.prototype.produit = function() {
 		this.stockTraitements += productionRateTraitements;
 		this.stockVaccins += productionRateVaccins;
 	}
+}
+
+exports.Ville.prototype.draw = function(surface) {
+	surface.blit(this.image, this.rect);
+
+	// Barre de contamination
+	draw.line(surface, "#000000", [this.rect.x - 1, 4 + this.rect.y + this.height], [this.rect.x + this.width + 1, 4 + this.rect.y + this.height], 5);
+	var p = this.habitantsInfectes / (this.habitantsSains + this.habitantsImmunises + this.habitantsInfectes);
+	draw.line(surface, "#FF0000", [this.rect.x, 4 + this.rect.y + this.height], [this.rect.x + this.width*p, 4 + this.rect.y + this.height], 5);
+
+
+	return;
 }
