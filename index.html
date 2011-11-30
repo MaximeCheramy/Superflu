@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Superflu</title>
+<!-- Styling -->
+    <style type=text/css>
+        body{
+           background:#fff;
+           color:#222;
+           margin:1em 0 2em 6em;
+           padding:0;
+        }
+        #gjs-loader {
+            width: 50%;
+            height: 50%;
+            background: url('./public/ajax-loader.gif');
+        }
+    </style>
+<!-- Start javascript/main.js -->
+    <script src="./public/yabble.js"></script>
+    <script src="./public/gamejs-wrapped.js"></script>
+    <script>
+        require.setModuleRoot('./javascript/');
+        require.run('main')
+    </script>
+</head>
+<!-- Html -->
+<body oncontextmenu="return false;">
+    <div>
+        <div id="gjs-loader">
+         Chargement...
+        </div>
+        <canvas id="gjs-canvas"></canvas>
+    </div>
+</body>
+</html>
