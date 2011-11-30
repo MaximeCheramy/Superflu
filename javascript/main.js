@@ -4,6 +4,7 @@ var draw = require('gamejs/draw');
 var targetedVille = null;
 var selectedVille = null;
 var pourcentageVoulu = 0.2;
+var populationInfectee = 0;
 
 var vitesseTransfert = 0.08;
 
@@ -106,12 +107,17 @@ var Ville = function(usine, zone, nom, x, y) {
 	var height = this.imageVille.getSize()[1];
 
 	this.rect = new gamejs.Rect(x-width/2,y-height/2, width, height);
+
+	this.stockVaccins = 0;
+	this.stockTraitements = 0;
+
 	return this;
 }
 gamejs.utils.objects.extend(Ville, gamejs.sprite.Sprite);
 
 Ville.prototype.update = function(msDuration) {
-	this.highlight();	
+	this.highlight();
+	this.produit();
 }
 
 Ville.prototype.highlight = function() {
@@ -127,7 +133,8 @@ Ville.prototype.produit = function() {
 		var productionRateTraitements = Math.floor(5 + 0.2 * Math.sqrt(populationInfectee));
 		var productionRateVaccins = Math.floor(Math.sqrt(populationInfectee));
 
-		// TODO: ajouter aux stocks.
+		this.stockTraitements += productionRateTraitements;
+		this.stockVaccins += productionRateVaccins;
 	}
 }
 
