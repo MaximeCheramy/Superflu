@@ -19,10 +19,10 @@ exports.Ville = function(gameLogic, usine, zone, nom, x, y) {
 
 	this.rect = new gamejs.Rect(x-this.width/2,y-this.height/2, this.width, this.height);
 
-	this.stockVaccins = 300000;
+	this.stockVaccins = 0;
 	this.stockVaccinsMax = 500000;
 	
-	this.stockTraitements = 10000;
+	this.stockTraitements = 0;
 	this.stockTraitementsMax = 20000;
 
 	this.habitantsSains = 200000 + Math.floor(Math.random() * 300000);
