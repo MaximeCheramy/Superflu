@@ -19,8 +19,11 @@ exports.Ville = function(gameLogic, usine, zone, nom, x, y) {
 
 	this.rect = new gamejs.Rect(x-this.width/2,y-this.height/2, this.width, this.height);
 
-	this.stockVaccins = 0;
-	this.stockTraitements = 0;
+	this.stockVaccins = 300000;
+	this.stockVaccinsMax = 500000;
+	
+	this.stockTraitements = 10000;
+	this.stockTraitementsMax = 20000;
 
 	this.habitantsSains = 200000 + Math.floor(Math.random() * 300000);
 	this.habitantsInfectes = 0;
@@ -92,10 +95,21 @@ exports.Ville.prototype.draw = function(surface) {
 	surface.blit(this.image, this.rect);
 
 	// Barre de contamination
-	draw.line(surface, "#000000", [this.rect.x - 1, 4 + this.rect.y + this.height], [this.rect.x + this.width + 1, 4 + this.rect.y + this.height], 5);
+	draw.line(surface, "#000000", [this.rect.x - 1, 4 + this.rect.y + this.height], [this.rect.x + this.width + 1, 4 + this.rect.y + this.height], 6);
 	var p = this.habitantsInfectes / (this.habitantsSains + this.habitantsImmunises + this.habitantsInfectes);
-	draw.line(surface, "#FF0000", [this.rect.x, 4 + this.rect.y + this.height], [this.rect.x + this.width*p, 4 + this.rect.y + this.height], 5);
-
+	draw.line(surface, "#FF0000", [this.rect.x, 4 + this.rect.y + this.height], [this.rect.x + this.width*p, 4 + this.rect.y + this.height], 4);
+	
+	// Barre traitements
+	draw.line(surface, "#000000", [this.rect.x - 3, this.rect.y + this.height], [this.rect.x - 3, this.rect.y], 6);
+	p = this.stockTraitements / this.stockTraitementsMax;
+	draw.line(surface, "#3333FF", [this.rect.x - 3, this.rect.y + this.height-1], [this.rect.x - 3, this.rect.y + this.height-1 - (this.height-2)*p], 4);
+	
+	// Barre vaccins
+	draw.line(surface, "#000000", [this.rect.x + this.width + 3, this.rect.y + this.height], [this.rect.x + this.width + 3, this.rect.y], 6);
+	p = this.stockVaccins / this.stockVaccinsMax;
+	draw.line(surface, "#FF3333", [this.rect.x + this.width + 3, this.rect.y + this.height-1], [this.rect.x + this.width + 3, this.rect.y + this.height-1 - (this.height-2)*p], 4);
+	
+	
 
 	return;
 }
