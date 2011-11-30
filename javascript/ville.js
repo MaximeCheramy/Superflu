@@ -34,6 +34,7 @@ gamejs.utils.objects.extend(exports.Ville, gamejs.sprite.Sprite);
 exports.Ville.prototype.update = function(msDuration) {
 	this.highlight();
 	this.produit();
+	this.update_habitants();
 }
 
 exports.Ville.prototype.highlight = function() {
@@ -52,6 +53,36 @@ exports.Ville.prototype.produit = function() {
 		this.stockTraitements += productionRateTraitements;
 		this.stockVaccins += productionRateVaccins;
 	}
+}
+
+exports.Ville.prototype.update_habitants = function() {
+	var habitants = this.habitantsSains + this.habitantsInfectes + this.habitantsImmunises;
+	var transmission = 0.015;
+	var perteImmunite = 0.0001;
+	var mortalite = 0.00005;
+	
+	// Contamination des habitants entre eux
+	if( habitants > 0) {
+		var nouveauxHabitantsInfectes = Math.round(this.habitantsInfectes * transmission * (this.habitantsSains / habitants));
+		if (nouveauxHabitantsInfectes > 0) {
+			this.habitantsSains -= nouveauxHabitantsInfectes;
+			this.habitantsInfectes += nouveauxHabitantsInfectes;
+		} else {
+			//Random rand = new Random();
+			//if (rand.nextFloat() < nouveauxHabitantsInfectes) {
+			//	this.habitantsSains -= 1;
+			//	this.habitantsInfectes += 1;
+			//}
+		}
+	}
+	
+	// Perte d'immunité 
+	this.habitantsImmunises -= Math.round(this.habitantsImmunises * perteImmunite);
+	
+	// Mortalité 
+	var nouveauxHabitantsMorts = Math.round(this.habitantsInfectes * mortalite);
+	this.habitantsInfectes -= nouveauxHabitantsMorts;
+	this.habitantsMorts += nouveauxHabitantsMorts;
 }
 
 exports.Ville.prototype.draw = function(surface) {
