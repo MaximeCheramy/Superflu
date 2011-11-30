@@ -6,3 +6,10 @@ Le code du jeu original est disponible ici : https://github.com/Addict7/SuperFlu
 
 Il a été développé en seulement 3 jours dans le cadre d'un module d'introduction
  à la programmation de jeux vidéos.
+ 
+ 
+NOTE(S):
+
+Si on utilise chromium (ou browsers basés sur chromium) pour tester le jeu en local sans serveur web, le jeu peut rester bloqué sur "Chargement"
+dans ce cas, il faut lancer chromium avec l'option "--allow-file-access-from-files" afin d'autoriser la lecture de fichiers locaux par JS
+
