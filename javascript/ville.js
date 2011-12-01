@@ -52,7 +52,7 @@ exports.Ville.prototype.highlight = function() {
 
 exports.Ville.prototype.produit = function(msDuration) {
 	if (this.isUsine) {
-		var productionRateTraitements = Math.floor(5 + 0.2 * Math.sqrt(this.gameLogic.getPopulationInfectee()) * msDuration);
+		var productionRateTraitements = Math.floor(Math.random() + 0.1 * Math.sqrt(this.gameLogic.getPopulationInfectee()) * msDuration);
 		var productionRateVaccins = Math.floor(Math.sqrt(this.gameLogic.getPopulationInfectee()) * msDuration);
 
 		this.ajouteStockTraitements(productionRateTraitements);

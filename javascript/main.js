@@ -45,7 +45,7 @@ function main() {
 		
 		if (c == 0) {
 			gameLogic.update(msDuration);
-			c = 3;
+			c = 4;
 		}
 		c--;
 
