@@ -26,7 +26,6 @@ function main() {
 	gamejs.display.setCaption("SuperFlu");
 	var gameLogic = new logic.GameLogic();
 	
-	gameLogic.lancerEpidemie(10);
 
 	var mainSurface = gamejs.display.getSurface();
 
@@ -51,8 +50,9 @@ function main() {
 		mainSurface.blit(lineSurface);
 	};
 
-
 	gamejs.time.fpsCallback(tick, this, 20);
+
+	gameLogic.lancerEpidemie(10);
 }
 
 

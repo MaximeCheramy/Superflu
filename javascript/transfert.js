@@ -1,14 +1,7 @@
 var gamejs = require('gamejs');
+var distance = require('distances');
 
 var vitesseTransfert = 0.08;
-
-function distance_sens2(depart, arrivee) {
-	if (depart[0] < arrivee[0]) {
-		return gamejs.utils.vectors.distance([depart[0] + 1024, depart[1]], arrivee);
-	} else {
-		return gamejs.utils.vectors.distance(depart, [arrivee[0] + 1024, arrivee[1]]);
-	}
-}
 
 exports.Transfert = function(depart, arrivee, stock, isTraitement) {
 	exports.Transfert.superConstructor.apply(this, arguments);
@@ -18,8 +11,8 @@ exports.Transfert = function(depart, arrivee, stock, isTraitement) {
 	this.isTraitement = isTraitement;
 	this.tempsDepart = Date.now();
 
-	var d1 = gamejs.utils.vectors.distance(depart.rect.center, arrivee.rect.center);
-	var d2 = distance_sens2(depart.rect.center, arrivee.rect.center);
+	var d1 = distance.distance_sens1(depart.rect.center, arrivee.rect.center);
+	var d2 = distance.distance_sens2(depart.rect.center, arrivee.rect.center);
 	this.direct = d1 <= d2;
 
 	if (this.direct) {

@@ -129,3 +129,43 @@ exports.Ville.prototype.ajouteStockVaccins = function(quantite) {
 		this.stockVaccins = this.stockVaccinsMax;
 	}
 };
+
+exports.Ville.prototype.getHabitants = function() {
+	return this.habitantsSains + this.habitantsImmunises + this.habitantsInfectes;
+};
+
+exports.Ville.prototype.getHabitantsSains = function() {
+	return this.habitantsSains;
+};
+
+exports.Ville.prototype.getHabitantsImmunises = function() {
+	return this.habitantsImmunises;
+};
+
+exports.Ville.prototype.getHabitantsInfectes = function() {
+	return this.habitantsInfectes;
+};
+
+exports.Ville.prototype.ajouteHabitantsSains = function(n) {
+	this.habitantsSains += n;
+};
+
+exports.Ville.prototype.ajouteHabitantsInfectes = function(n) {
+	this.habitantsInfectes += n;
+};
+
+exports.Ville.prototype.ajouteHabitantsImmunises = function(n) {
+	this.habitantsImmunises += n;
+};
+
+exports.Ville.prototype.retireHabitantsSains = function(n) {
+	this.habitantsSains -= n;
+};
+
+exports.Ville.prototype.retireHabitantsInfectes = function(n) {
+	this.habitantsInfectes -= n;
+};
+
+exports.Ville.prototype.retireHabitantsImmunises = function(n) {
+	this.habitantsImmunises -= n;
+};
