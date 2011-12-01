@@ -4,20 +4,23 @@ var carte = require('carte');
 
 exports.GameLogic = function() {
 	this.populationInfectee = 0;
+	this.populationMondiale = 0;
 	this.targetedVille = null;
 	this.carte = new carte.Carte(this);
 	return this;
 };
 
 exports.GameLogic.prototype.update = function(deltaTime) {
-	this.updatePopulationInfectee();
+	this.updatePopulation();
 	this.carte.update(deltaTime);
 };
 
-exports.GameLogic.prototype.updatePopulationInfectee = function() {
+exports.GameLogic.prototype.updatePopulation = function() {
 	this.populationInfectee = 0;
+	this.populationMondiale = 0;
 	for (var i in this.carte.zones) {
 		this.populationInfectee += this.carte.zones[i].getPopulationInfectee();
+		this.populationMondiale += this.carte.zones[i].getPopulation();
 	}
 };
 
@@ -35,4 +38,8 @@ exports.GameLogic.prototype.lancerEpidemie = function(nombre) {
 
 exports.GameLogic.prototype.getPopulationInfectee = function() {
 	return this.populationInfectee;
+};
+
+exports.GameLogic.prototype.getPopulationMondiale = function() {
+	return this.populationMondiale;
 };

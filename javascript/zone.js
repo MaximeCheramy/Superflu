@@ -7,6 +7,8 @@ exports.Zone = function(gameLogic, id) {
 	this.gameLogic = gameLogic;
 	this.nbVilles = 0;
 	this.populationInfectee = 0;
+	this.population = 0;
+	this.populationMorte = 0;
 	this.chargeVilles();
 	return this;
 };
@@ -28,7 +30,7 @@ exports.Zone.prototype.chargeVilles = function() {
 };
 
 exports.Zone.prototype.update = function(deltaTime) {
-	this.updatePopulationInfectee();
+	this.updatePopulation();
 	this.gVilles.update(deltaTime);
 };
 
@@ -36,14 +38,25 @@ exports.Zone.prototype.draw = function(surface) {
 	this.gVilles.draw(surface);
 };
 
-exports.Zone.prototype.updatePopulationInfectee = function() {
+exports.Zone.prototype.updatePopulation = function() {
 	var populationInfectee = 0;
+	var population = 0;
 	this.gVilles.sprites().forEach(function(ville) {
-		populationInfectee += ville.habitantsInfectes;
+		populationInfectee += ville.getHabitantsInfectes();
+		population += ville.getHabitants();
 	});
 	this.populationInfectee = populationInfectee;
+	this.population = population;
 };
 
 exports.Zone.prototype.getPopulationInfectee = function() {
 	return this.populationInfectee;
+};
+
+exports.Zone.prototype.getPopulation = function() {
+	return this.population;
+};
+
+exports.Zone.prototype.getPopulationMorte = function() {
+	return this.populationMorte;
 };

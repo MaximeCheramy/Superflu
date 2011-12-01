@@ -3,6 +3,8 @@ var draw = require('gamejs/draw');
 var zone = require('zone');
 var distance = require('distances');
 
+var font = new gamejs.font.Font('16px Arial, Helvetica, sans-serif');
+
 exports.Carte = function(gameLogic) {
 	this.gameLogic = gameLogic;
 	this.zones = new Array();
@@ -79,8 +81,16 @@ exports.Carte.prototype.migrations = function(deltaTime) {
 };
 
 exports.Carte.prototype.draw = function(surface) {
+	var popMondText = font.render("Population mondiale : ???", '#ffffff');
+	var popMortsText = font.render("Nombre de morts : ???", '#ffffff');
+	var popMaladeText = font.render("Nombre de malades : " + this.gameLogic.getPopulationInfectee(), '#ffffff');
+	surface.blit(popMondText, [0, 2]);
+	surface.blit(popMortsText, [0, 20]);
+	surface.blit(popMaladeText, [0, 40]);
+
 	var id;
 	for (id = 1; id <= 6; id++) {
 		this.zones[id-1].draw(surface);
 	}
+
 };

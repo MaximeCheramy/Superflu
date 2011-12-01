@@ -35,6 +35,8 @@ function main() {
 	var background = buildMap();
 	var lineSurface = new gamejs.Surface(1024, 545);
 
+	var c = 0;
+
 	function tick(msDuration) {
 		
 		mainSurface.clear();
@@ -42,7 +44,12 @@ function main() {
 
 		events.eventManager(gameLogic, lineSurface, gTransferts);
 		
-		gameLogic.update(msDuration);
+		if (c == 0) {
+			gameLogic.update(msDuration);
+			c = 3;
+		}
+		c--;
+
 		gameLogic.draw(mainSurface);
 
 		gTransferts.update(msDuration);
