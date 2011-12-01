@@ -10,13 +10,13 @@ function distance_sens2(depart, arrivee) {
 	}
 }
 
-exports.Transfert = function(depart, arrivee, stock) {
+exports.Transfert = function(depart, arrivee, stock, isTraitement) {
 	exports.Transfert.superConstructor.apply(this, arguments);
 	this.depart = depart;
 	this.arrivee = arrivee;
 	this.stock = stock;
+	this.isTraitement = isTraitement;
 	this.tempsDepart = Date.now();
-
 
 	var d1 = gamejs.utils.vectors.distance(depart.rect.center, arrivee.rect.center);
 	var d2 = distance_sens2(depart.rect.center, arrivee.rect.center);
@@ -65,6 +65,11 @@ exports.Transfert.prototype.update = function(msDuration) {
 	var zoom = 0.25 + 0.75*Math.sin(avancement*Math.PI);
 
 	if (avancement >= 1) {
+		if (this.isTraitement) {
+			this.arrivee.ajouteStockTraitements(this.stock);
+		} else {
+			this.arrivee.ajouteStockVaccins(this.stock);
+		}
 		this.kill();
 	}
 

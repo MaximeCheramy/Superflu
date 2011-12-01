@@ -114,3 +114,17 @@ exports.Ville.prototype.draw = function(surface) {
 
 	return;
 }
+
+exports.Ville.prototype.ajouteStockTraitements = function(quantite) {
+	this.stockTraitements += quantite;
+	if (this.stockTraitements > this.stockTraitementsMax) {
+		this.stockTraitements = this.stockTraitementsMax;
+	}
+}
+
+exports.Ville.prototype.ajouteStockVaccins = function(quantite) {
+	this.stockVaccins += quantite;
+	if (this.stockVaccins > this.stockVaccinsMax) {
+		this.stockVaccins = this.stockVaccinsMax;
+	}
+}

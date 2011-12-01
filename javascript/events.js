@@ -18,7 +18,15 @@ exports.eventManager = function(gameLogic, lineSurface, gTransferts) {
 			selectedVille = gameLogic.targetedVille;
 		} else if (event.type === gamejs.event.MOUSE_UP) {
 			if (gameLogic.targetedVille != null && selectedVille != null && gameLogic.targetedVille != selectedVille) {
-				gTransferts.add(new transfert.Transfert(selectedVille, gameLogic.targetedVille));
+				var quantite;
+				if (isTraitement) {
+					quantite = pourcentageVoulu * selectedVille.stockTraitements;
+					selectedVille.stockTraitements -= quantite;
+				} else {
+					quantite = pourcentageVoulu * selectedVille.stockVaccins;
+					selectedVille.stockVaccins -= quantite;
+				}
+				gTransferts.add(new transfert.Transfert(selectedVille, gameLogic.targetedVille, quantite, isTraitement));
 			}
 
 			selectedVille = null;
