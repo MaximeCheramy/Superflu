@@ -32,14 +32,15 @@ exports.Ville = function(gameLogic, usine, zone, nom, x, y) {
 	this.habitantsMorts = 0;
 
 	return this;
-}
+};
+
 gamejs.utils.objects.extend(exports.Ville, gamejs.sprite.Sprite);
 
 exports.Ville.prototype.update = function(msDuration) {
 	this.highlight();
 	this.produit(msDuration);
 	this.update_habitants(msDuration);
-}
+};
 
 exports.Ville.prototype.highlight = function() {
 	if (this == this.gameLogic.targetedVille) {
@@ -47,17 +48,17 @@ exports.Ville.prototype.highlight = function() {
 	} else {
 		this.image = this.imageVille;
 	}
-}
+};
 
 exports.Ville.prototype.produit = function(msDuration) {
 	if (this.isUsine) {
-		var productionRateTraitements = Math.floor(5 + 0.2 * Math.sqrt(this.gameLogic.populationInfectee) * msDuration);
-		var productionRateVaccins = Math.floor(Math.sqrt(this.gameLogic.populationInfectee) * msDuration);
+		var productionRateTraitements = Math.floor(5 + 0.2 * Math.sqrt(this.gameLogic.getPopulationInfectee()) * msDuration);
+		var productionRateVaccins = Math.floor(Math.sqrt(this.gameLogic.getPopulationInfectee()) * msDuration);
 
-		this.stockTraitements += productionRateTraitements;
-		this.stockVaccins += productionRateVaccins;
+		this.ajouteStockTraitements(productionRateTraitements);
+		this.ajouteStockVaccins(productionRateVaccins);
 	}
-}
+};
 
 exports.Ville.prototype.update_habitants = function(msDuration) {
 	var habitants = this.habitantsSains + this.habitantsInfectes + this.habitantsImmunises;
@@ -90,7 +91,7 @@ exports.Ville.prototype.update_habitants = function(msDuration) {
 		this.habitantsInfectes -= nouveauxHabitantsMorts;
 		this.habitantsMorts += nouveauxHabitantsMorts;
 	}
-}
+};
 
 exports.Ville.prototype.draw = function(surface) {
 	surface.blit(this.image, this.rect);
@@ -113,18 +114,18 @@ exports.Ville.prototype.draw = function(surface) {
 	
 
 	return;
-}
+};
 
 exports.Ville.prototype.ajouteStockTraitements = function(quantite) {
 	this.stockTraitements += quantite;
 	if (this.stockTraitements > this.stockTraitementsMax) {
 		this.stockTraitements = this.stockTraitementsMax;
 	}
-}
+};
 
 exports.Ville.prototype.ajouteStockVaccins = function(quantite) {
 	this.stockVaccins += quantite;
 	if (this.stockVaccins > this.stockVaccinsMax) {
 		this.stockVaccins = this.stockVaccinsMax;
 	}
-}
+};

@@ -9,7 +9,7 @@ var pourcentageVoulu = 0.2;
 var selectedVille = null;
 
 exports.eventManager = function(gameLogic, lineSurface, gTransferts) {
-	var events = gamejs.event.get()
+	var events = gamejs.event.get();
 	events.forEach(function(event) {
 		var update = false;
 		if (event.type === gamejs.event.MOUSE_DOWN) {
