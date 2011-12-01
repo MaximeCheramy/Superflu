@@ -37,8 +37,8 @@ gamejs.utils.objects.extend(exports.Ville, gamejs.sprite.Sprite);
 
 exports.Ville.prototype.update = function(msDuration) {
 	this.highlight();
-	this.produit();
-	this.update_habitants();
+	this.produit(msDuration);
+	this.update_habitants(msDuration);
 }
 
 exports.Ville.prototype.highlight = function() {
@@ -49,44 +49,44 @@ exports.Ville.prototype.highlight = function() {
 	}
 }
 
-exports.Ville.prototype.produit = function() {
+exports.Ville.prototype.produit = function(msDuration) {
 	if (this.isUsine) {
-		var productionRateTraitements = Math.floor(5 + 0.2 * Math.sqrt(this.gameLogic.populationInfectee));
-		var productionRateVaccins = Math.floor(Math.sqrt(this.gameLogic.populationInfectee));
+		var productionRateTraitements = Math.floor(5 + 0.2 * Math.sqrt(this.gameLogic.populationInfectee) * msDuration);
+		var productionRateVaccins = Math.floor(Math.sqrt(this.gameLogic.populationInfectee) * msDuration);
 
 		this.stockTraitements += productionRateTraitements;
 		this.stockVaccins += productionRateVaccins;
 	}
 }
 
-exports.Ville.prototype.update_habitants = function() {
+exports.Ville.prototype.update_habitants = function(msDuration) {
 	var habitants = this.habitantsSains + this.habitantsInfectes + this.habitantsImmunises;
 	
 	// Ces données devraient pouvoir varier en fonction du virus
-	var transmission = 0.015;
-	var perteImmunite = 0.0001;
-	var mortalite = 0.00005;
+	var transmission = 0.0015;
+	var perteImmunite = 0.00001;
+	var mortalite = 0.000005;
 	
 	if( habitants > 0) {
 		
 		// Contamination des habitants entre eux
-		var nouveauxHabitantsInfectes = Math.round(this.habitantsInfectes * transmission * (this.habitantsSains / habitants));
+		var nouveauxHabitantsInfectes = Math.round(this.habitantsInfectes * transmission * (this.habitantsSains / habitants) * msDuration);
 		this.habitantsSains -= nouveauxHabitantsInfectes;
 		this.habitantsInfectes += nouveauxHabitantsInfectes;
 		
 		// Perte d'immunité 
-		this.habitantsImmunises -= Math.round(this.habitantsImmunises * perteImmunite);
+		this.habitantsImmunises -= Math.round(this.habitantsImmunises * perteImmunite * msDuration);
 		
 		// Immunisation
 		if (this.stocksVaccins > 0) {
-				var nouveauxHabitantsImmunises = Math.min(this.habitantsSains, this.stocksVaccins);
+				var nouveauxHabitantsImmunises = Math.min(this.habitantsSains, this.stocksVaccins) * msDuration;
 				this.stocksVaccins -= nouveauxHabitantsImmunises;
 				this.habitantsSains -= nouveauxHabitantsImmunises;
 				this.habitantsImmunises += nouveauxHabitantsImmunises;
 		}
 
 		// Mortalité 
-		var nouveauxHabitantsMorts = Math.round(this.habitantsInfectes * mortalite);
+		var nouveauxHabitantsMorts = Math.round(this.habitantsInfectes * mortalite * msDuration);
 		this.habitantsInfectes -= nouveauxHabitantsMorts;
 		this.habitantsMorts += nouveauxHabitantsMorts;
 	}
