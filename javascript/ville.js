@@ -111,7 +111,14 @@ exports.Ville.prototype.draw = function(surface) {
 	p = this.stockVaccins / this.stockVaccinsMax;
 	draw.line(surface, "#FF3333", [this.rect.x + this.width + 3, this.rect.y + this.height-1], [this.rect.x + this.width + 3, this.rect.y + this.height-1 - (this.height-2)*p], 4);
 	
-	
+	// Image d'infection
+	if(this.habitantsInfectes > 10000) {
+		var infected = gamejs.image.load("images/infected.png");
+		surface.blit(infected, new gamejs.Rect(this.rect.x, this.rect.y, 30, 30));
+	} else if(this.habitantsInfectes > 200) {
+		var infected = gamejs.image.load("images/infected.png");
+		surface.blit(infected, new gamejs.Rect(this.rect.x, this.rect.y, 20, 20));
+	}
 
 	return;
 };

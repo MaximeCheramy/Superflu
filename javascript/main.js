@@ -66,6 +66,7 @@ gamejs.preload(["images/carte_eur.png",
 								"images/ville.png",
 								"images/usine.png",
 								"images/avion.png",
+								"images/infected.png",
 								"images/HL_usine.png",
 								"images/HL_ville.png"]);
 gamejs.ready(main);
