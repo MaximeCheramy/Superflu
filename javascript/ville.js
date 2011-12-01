@@ -75,13 +75,21 @@ exports.Ville.prototype.update_habitants = function(msDuration) {
 		this.habitantsSains -= nouveauxHabitantsInfectes;
 		this.habitantsInfectes += nouveauxHabitantsInfectes;
 		
+		// Utilisation des traitements
+		if (this.stockTraitementsMax > 0) {
+				var nouveauxHabitantsImmunises = Math.min(this.habitantsInfectes, this.stockTraitements);
+				this.stockTraitements -= nouveauxHabitantsImmunises;
+				this.habitantsInfectes -= nouveauxHabitantsImmunises;
+				this.habitantsImmunises += nouveauxHabitantsImmunises;
+		}
+
 		// Perte d'immunité 
 		this.habitantsImmunises -= Math.round(this.habitantsImmunises * perteImmunite * msDuration);
-		
+
 		// Immunisation
-		if (this.stocksVaccins > 0) {
-				var nouveauxHabitantsImmunises = Math.min(this.habitantsSains, this.stocksVaccins) * msDuration;
-				this.stocksVaccins -= nouveauxHabitantsImmunises;
+		if (this.stockVaccins > 0) {
+				var nouveauxHabitantsImmunises = Math.min(this.habitantsSains, this.stockVaccins);
+				this.stockVaccins -= nouveauxHabitantsImmunises;
 				this.habitantsSains -= nouveauxHabitantsImmunises;
 				this.habitantsImmunises += nouveauxHabitantsImmunises;
 		}
