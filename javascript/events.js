@@ -8,7 +8,7 @@ var isTraitement = true;
 var pourcentageVoulu = 0.2;
 var selectedVille = null;
 
-exports.eventManager = function(gameLogic, lineSurface, gVilles, gTransferts) {
+exports.eventManager = function(gameLogic, lineSurface, gTransferts) {
 	var events = gamejs.event.get()
 	events.forEach(function(event) {
 		var update = false;
@@ -32,7 +32,11 @@ exports.eventManager = function(gameLogic, lineSurface, gVilles, gTransferts) {
 				update = true;
 		} else if (event.type === gamejs.event.MOUSE_MOTION) {
 			// On cherche la ville où on a le curseur.
-			var villesHL = gVilles.collidePoint(event.pos);
+			var villesHL=new Array();
+			var i;
+			for(i=0; i<6; i++){
+				villesHL = villesHL.concat(gameLogic.carte.zones[i].gVilles.collidePoint(event.pos));
+			}
 			if (villesHL.length > 0) {
 				gameLogic.targetedVille = villesHL[0];
 			} else {

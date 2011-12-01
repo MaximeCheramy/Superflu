@@ -2,6 +2,7 @@ var gamejs = require('gamejs');
 var draw = require('gamejs/draw');
 
 exports.Ville = function(gameLogic, usine, zone, nom, x, y) {
+	
 	exports.Ville.superConstructor.apply(this, arguments);
 	this.gameLogic = gameLogic;
 	this.isUsine = usine;

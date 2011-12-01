@@ -1,34 +1,14 @@
 var gamejs = require('gamejs');
 var draw = require('gamejs/draw');
-
-var ville = require('ville');
+var carte = require('carte');
 var logic = require('logic');
 var events = require('events');
 
-function chargeVilles(gameLogic) {
-	var gVilles = new gamejs.sprite.Group();
-
-	for (id = 1; id <= 6; id++) {
-		var filepath = "zones/zone" + id + ".data";
-		lines = gamejs.http.get(filepath).responseText.split("\n");
-	
-		var nom = lines.shift();
-		for (var i in lines) {
-			var tab = lines[i].split(" ");
-			if (tab.length == 3) {
-				gVilles.add(new ville.Ville(gameLogic, i == 0, nom, tab[0], tab[1], tab[2]));
-			}
-		}
-	}
-
-	return gVilles;
-}
-
 function buildMap() {
-	var carte = gamejs.image.load("images/carte.png");
+	var map = gamejs.image.load("images/carte.png");
 
 	var background = new gamejs.Surface(1024, 545);
-	background.blit(carte);
+	background.blit(map);
 
 	// Pour l'instant on affecte toutes les zones.
 	background.blit(gamejs.image.load("images/carte_eur.png"));
@@ -49,21 +29,21 @@ function main() {
 	var mainSurface = gamejs.display.getSurface();
 
 	// Sprites
-	var gVilles = chargeVilles(gameLogic);
 	var gTransferts = new gamejs.sprite.Group();
 
 	var background = buildMap();
 	var lineSurface = new gamejs.Surface(1024, 545);
 
-
 	function tick(msDuration) {
+		
 		mainSurface.clear();
 		mainSurface.blit(background);
 
-		events.eventManager(gameLogic, lineSurface, gVilles, gTransferts);
+		events.eventManager(gameLogic, lineSurface, gTransferts);
+		
+		gameLogic.update(msDuration);
+		gameLogic.draw(mainSurface);
 
-		gVilles.update(msDuration);
-		gVilles.draw(mainSurface);
 		gTransferts.update(msDuration);
 		gTransferts.draw(mainSurface);
 		mainSurface.blit(lineSurface);
