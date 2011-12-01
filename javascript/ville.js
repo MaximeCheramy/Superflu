@@ -153,6 +153,10 @@ exports.Ville.prototype.getHabitantsInfectes = function() {
 	return this.habitantsInfectes;
 };
 
+exports.Ville.prototype.getHabitantsMorts = function() {
+	return this.habitantsMorts;
+};
+
 exports.Ville.prototype.ajouteHabitantsSains = function(n) {
 	this.habitantsSains += n;
 };

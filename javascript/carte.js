@@ -4,6 +4,7 @@ var zone = require('zone');
 var distance = require('distances');
 
 var font = new gamejs.font.Font('16px Arial, Helvetica, sans-serif');
+var TAUX_MIGRATION = 0.1;
 
 exports.Carte = function(gameLogic) {
 	this.gameLogic = gameLogic;
@@ -41,7 +42,7 @@ exports.Carte.prototype.migrations = function(deltaTime) {
 					if (d == 0) {
 						continue;
 					}
-					var flux = Math.floor((Math.random() * villes1[idV1].getHabitants()) / (d*d + this.gameLogic.getPopulationInfectee()) * deltaTime);
+					var flux = Math.floor((Math.random() * villes1[idV1].getHabitants() * TAUX_MIGRATION) / (d*d + this.gameLogic.getPopulationInfectee()) * deltaTime);
 					var flux_sain = Math.floor(taux_sain * flux);
 					var flux_infecte = Math.floor(taux_infection * flux);
 					var flux_immunise = Math.floor(taux_immunisation * flux);
@@ -81,8 +82,8 @@ exports.Carte.prototype.migrations = function(deltaTime) {
 };
 
 exports.Carte.prototype.draw = function(surface) {
-	var popMondText = font.render("Population mondiale : ???", '#ffffff');
-	var popMortsText = font.render("Nombre de morts : ???", '#ffffff');
+	var popMondText = font.render("Population mondiale : " + this.gameLogic.getPopulationMondiale(), '#ffffff');
+	var popMortsText = font.render("Nombre de morts : " + this.gameLogic.getPopulationMorte(), '#ffffff');
 	var popMaladeText = font.render("Nombre de malades : " + this.gameLogic.getPopulationInfectee(), '#ffffff');
 	surface.blit(popMondText, [0, 2]);
 	surface.blit(popMortsText, [0, 20]);
@@ -92,5 +93,4 @@ exports.Carte.prototype.draw = function(surface) {
 	for (id = 1; id <= 6; id++) {
 		this.zones[id-1].draw(surface);
 	}
-
 };

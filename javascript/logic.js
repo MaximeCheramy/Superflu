@@ -5,6 +5,7 @@ var carte = require('carte');
 exports.GameLogic = function() {
 	this.populationInfectee = 0;
 	this.populationMondiale = 0;
+	this.populationMorte = 0;
 	this.targetedVille = null;
 	this.carte = new carte.Carte(this);
 	return this;
@@ -18,9 +19,11 @@ exports.GameLogic.prototype.update = function(deltaTime) {
 exports.GameLogic.prototype.updatePopulation = function() {
 	this.populationInfectee = 0;
 	this.populationMondiale = 0;
+	this.populationMorte = 0;
 	for (var i in this.carte.zones) {
 		this.populationInfectee += this.carte.zones[i].getPopulationInfectee();
 		this.populationMondiale += this.carte.zones[i].getPopulation();
+		this.populationMorte += this.carte.zones[i].getPopulationMorte();
 	}
 };
 
@@ -42,4 +45,8 @@ exports.GameLogic.prototype.getPopulationInfectee = function() {
 
 exports.GameLogic.prototype.getPopulationMondiale = function() {
 	return this.populationMondiale;
+};
+
+exports.GameLogic.prototype.getPopulationMorte = function() {
+	return this.populationMorte;
 };

@@ -59,7 +59,7 @@ function main() {
 
 	gamejs.time.fpsCallback(tick, this, 20);
 
-	gameLogic.lancerEpidemie(10);
+	gameLogic.lancerEpidemie(100);
 }
 
 

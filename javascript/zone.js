@@ -41,12 +41,15 @@ exports.Zone.prototype.draw = function(surface) {
 exports.Zone.prototype.updatePopulation = function() {
 	var populationInfectee = 0;
 	var population = 0;
+	var populationMorte = 0;
 	this.gVilles.sprites().forEach(function(ville) {
 		populationInfectee += ville.getHabitantsInfectes();
 		population += ville.getHabitants();
+		populationMorte += ville.getHabitantsMorts();
 	});
 	this.populationInfectee = populationInfectee;
 	this.population = population;
+	this.populationMorte = populationMorte;
 };
 
 exports.Zone.prototype.getPopulationInfectee = function() {
