@@ -25,7 +25,6 @@ function main() {
 	var display = gamejs.display.setMode([1024, 545]);
 	gamejs.display.setCaption("SuperFlu");
 	var gameLogic = new logic.GameLogic();
-	
 
 	var mainSurface = gamejs.display.getSurface();
 
