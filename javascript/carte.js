@@ -4,7 +4,7 @@ var zone = require('zone');
 var distance = require('distances');
 
 var font = new gamejs.font.Font('16px Arial, Helvetica, sans-serif');
-var TAUX_MIGRATION = 0.1;
+var TAUX_MIGRATION = 1;
 
 exports.Carte = function(gameLogic) {
 	this.gameLogic = gameLogic;
@@ -42,7 +42,7 @@ exports.Carte.prototype.migrations = function(deltaTime) {
 					if (d == 0) {
 						continue;
 					}
-					var flux = Math.floor((Math.random() * villes1[idV1].getHabitants() * TAUX_MIGRATION) / (d*d + this.gameLogic.getPopulationInfectee()) * deltaTime);
+					var flux = Math.floor((Math.random() * villes1[idV1].getHabitants() * TAUX_MIGRATION) / (d*d + 3*this.gameLogic.getPopulationInfectee()) * deltaTime);
 					var flux_sain = Math.floor(taux_sain * flux);
 					var flux_infecte = Math.floor(taux_infection * flux);
 					var flux_immunise = Math.floor(taux_immunisation * flux);
