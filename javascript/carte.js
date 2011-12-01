@@ -4,7 +4,7 @@ var zone = require('zone');
 var distance = require('distances');
 
 var font = new gamejs.font.Font('16px Arial, Helvetica, sans-serif');
-var TAUX_MIGRATION = 1;
+var TAUX_MIGRATION = .2;
 
 exports.Carte = function(gameLogic) {
 	this.gameLogic = gameLogic;

@@ -64,13 +64,13 @@ exports.Ville.prototype.update_habitants = function(msDuration) {
 	var habitants = this.habitantsSains + this.habitantsInfectes + this.habitantsImmunises;
 	
 	// Ces données devraient pouvoir varier en fonction du virus
-	var transmission = 0.0015;
-	var perteImmunite = 0.00001;
-	var mortalite = 0.000005;
+	var transmission = 0.00015;
+	var perteImmunite = 0.000001;
+	var mortalite = 0.0000005;
 	
 	// Les stocks se perdent :(
-	this.stockVaccins *= 0.95;
-	this.stockTraitements *= 0.97;
+	this.stockVaccins *= Math.pow(0.9995, Math.floor(msDuration / 10));
+	this.stockTraitements *= Math.pow(0.9997, Math.floor(msDuration / 10));
 
 	if( habitants > 0) {
 		

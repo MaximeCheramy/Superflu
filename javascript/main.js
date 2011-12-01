@@ -44,12 +44,6 @@ function main() {
 
 		events.eventManager(gameLogic, lineSurface, gTransferts);
 		
-		if (c == 0) {
-			gameLogic.update(msDuration);
-			c = 4;
-		}
-		c--;
-
 		gameLogic.draw(mainSurface);
 
 		gTransferts.update(msDuration);
@@ -57,7 +51,12 @@ function main() {
 		mainSurface.blit(lineSurface);
 	};
 
+	function updateLogic(msDuration) {
+		gameLogic.update(msDuration);
+	}
+
 	gamejs.time.fpsCallback(tick, this, 20);
+	gamejs.time.fpsCallback(updateLogic, this, 2);
 
 	gameLogic.lancerEpidemie(100);
 }
