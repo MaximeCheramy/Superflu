@@ -20,10 +20,10 @@ exports.eventManager = function(gameLogic, lineSurface, gTransferts) {
 			if (gameLogic.targetedVille != null && selectedVille != null && gameLogic.targetedVille != selectedVille) {
 				var quantite;
 				if (isTraitement) {
-					quantite = pourcentageVoulu * selectedVille.stockTraitements;
+					quantite = Math.round(pourcentageVoulu * selectedVille.stockTraitements);
 					selectedVille.stockTraitements -= quantite;
 				} else {
-					quantite = pourcentageVoulu * selectedVille.stockVaccins;
+					quantite = Math.round(pourcentageVoulu * selectedVille.stockVaccins);
 					selectedVille.stockVaccins -= quantite;
 				}
 				gTransferts.add(new transfert.Transfert(selectedVille, gameLogic.targetedVille, quantite, isTraitement));

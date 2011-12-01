@@ -24,7 +24,7 @@ exports.Ville = function(gameLogic, usine, zone, nom, x, y) {
 	this.stockVaccinsMax = 500000;
 	
 	this.stockTraitements = 0;
-	this.stockTraitementsMax = 20000;
+	this.stockTraitementsMax = 100000;
 
 	this.habitantsSains = 200000 + Math.floor(Math.random() * 300000);
 	this.habitantsInfectes = 0;
@@ -68,6 +68,10 @@ exports.Ville.prototype.update_habitants = function(msDuration) {
 	var perteImmunite = 0.00001;
 	var mortalite = 0.000005;
 	
+	// Les stocks se perdent :(
+	this.stockVaccins *= 0.95;
+	this.stockTraitements *= 0.97;
+
 	if( habitants > 0) {
 		
 		// Contamination des habitants entre eux
