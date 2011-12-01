@@ -69,13 +69,13 @@ exports.Ville.prototype.update_habitants = function(msDuration) {
 	var mortalite = 0.0000005;
 	
 	// Les stocks se perdent :(
-	this.stockVaccins *= Math.pow(0.9995, Math.floor(msDuration / 10));
-	this.stockTraitements *= Math.pow(0.9997, Math.floor(msDuration / 10));
+	this.stockVaccins = Math.round(this.stockVaccins * Math.pow(0.9995, Math.floor(msDuration / 10)));
+	this.stockTraitements = Math.round(this.stockTraitements * Math.pow(0.9997, Math.floor(msDuration / 10)));
 
 	if( habitants > 0) {
 		
 		// Contamination des habitants entre eux
-		var nouveauxHabitantsInfectes = Math.round(this.habitantsInfectes * transmission * (this.habitantsSains / habitants) * msDuration);
+		var nouveauxHabitantsInfectes = Math.floor(this.habitantsInfectes * transmission * (this.habitantsSains / habitants) * msDuration);
 		this.habitantsSains -= nouveauxHabitantsInfectes;
 		this.habitantsInfectes += nouveauxHabitantsInfectes;
 		
@@ -87,8 +87,10 @@ exports.Ville.prototype.update_habitants = function(msDuration) {
 				this.habitantsImmunises += nouveauxHabitantsImmunises;
 		}
 
-		// Perte d'immunité 
-		this.habitantsImmunises -= Math.round(this.habitantsImmunises * perteImmunite * msDuration);
+		// Perte d'immunité
+		var perteImmunite = Math.floor(this.habitantsImmunises * perteImmunite * msDuration);
+		this.habitantsImmunises -= perteImmunite;
+		this.habitantsSains += perteImmunite;
 
 		// Immunisation
 		if (this.stockVaccins > 0) {
@@ -99,7 +101,7 @@ exports.Ville.prototype.update_habitants = function(msDuration) {
 		}
 
 		// Mortalité 
-		var nouveauxHabitantsMorts = Math.round(this.habitantsInfectes * mortalite * msDuration);
+		var nouveauxHabitantsMorts = Math.floor(this.habitantsInfectes * mortalite * msDuration);
 		this.habitantsInfectes -= nouveauxHabitantsMorts;
 		this.habitantsMorts += nouveauxHabitantsMorts;
 	}
