@@ -75,9 +75,18 @@ exports.Ville.prototype.update_habitants = function(msDuration) {
 	if( habitants > 0) {
 		
 		// Contamination des habitants entre eux
-		var nouveauxHabitantsInfectes = Math.floor(this.habitantsInfectes * transmission * (this.habitantsSains / habitants) * msDuration);
-		this.habitantsSains -= nouveauxHabitantsInfectes;
-		this.habitantsInfectes += nouveauxHabitantsInfectes;
+		if(this.habitantsInfectes > 0) {
+			var nouveauxHabitantsInfectes = this.habitantsInfectes * transmission * (this.habitantsSains / habitants) * msDuration;
+			if(nouveauxHabitantsInfectes >= 1) { 
+				this.habitantsSains -= Math.floor(nouveauxHabitantsInfectes);
+				this.habitantsInfectes += Math.floor(nouveauxHabitantsInfectes);
+			} else {
+				if(Math.random() < nouveauxHabitantsInfectes) {
+					this.habitantsSains --;
+					this.habitantsInfectes ++;
+				}
+			}
+		}
 		
 		// Utilisation des traitements
 		if (this.stockTraitementsMax > 0) {
@@ -88,9 +97,19 @@ exports.Ville.prototype.update_habitants = function(msDuration) {
 		}
 
 		// Perte d'immunité
-		var perteImmunite = Math.floor(this.habitantsImmunises * perteImmunite * msDuration);
-		this.habitantsImmunises -= perteImmunite;
-		this.habitantsSains += perteImmunite;
+		if(this.habitantsImmunises > 0) {
+			var perteImmunite = this.habitantsImmunises * perteImmunite * msDuration;
+			if(perteImmunite >= 1) {
+				perteImmunite = Math.floor(perteImmunite);
+				this.habitantsImmunises -= perteImmunite;
+				this.habitantsSains += perteImmunite;
+			} else {
+				if(Math.random() < perteImmunite) {
+					this.habitantsImmunises --;
+					this.habitantsSains ++;
+				}
+			}
+		}
 
 		// Immunisation
 		if (this.stockVaccins > 0) {
@@ -101,9 +120,19 @@ exports.Ville.prototype.update_habitants = function(msDuration) {
 		}
 
 		// Mortalité 
-		var nouveauxHabitantsMorts = Math.floor(this.habitantsInfectes * mortalite * msDuration);
-		this.habitantsInfectes -= nouveauxHabitantsMorts;
-		this.habitantsMorts += nouveauxHabitantsMorts;
+		if(this.habitantsInfectes > 0 ) { 
+			var nouveauxHabitantsMorts = this.habitantsInfectes * mortalite * msDuration;
+			if(nouveauxHabitantsMorts >= 1) {
+				nouveauxHabitantsMorts = Math.floor(nouveauxHabitantsMorts);
+				this.habitantsInfectes -= nouveauxHabitantsMorts;
+				this.habitantsMorts += nouveauxHabitantsMorts;	
+			} else {
+				if(Math.random() < nouveauxHabitantsMorts) {
+					this.habitantsInfectes --;
+					this.habitantsMorts ++;
+				}
+			}
+		}
 	}
 };
 
