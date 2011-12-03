@@ -21,6 +21,34 @@ function buildMap() {
 	return background;
 }
 
+function aide() {
+	var mainSurface = gamejs.display.getSurface();
+	var aide = Array();
+	aide[0] = gamejs.image.load("images/aide1.png");
+	aide[1] = gamejs.image.load("images/aide2.png");
+	aide[2] = gamejs.image.load("images/aide3.png");
+	aide[3] = gamejs.image.load("images/aide4.png");
+	var c = 0;
+
+	function tick() {
+		var events = gamejs.event.get();
+    events.forEach(function(event) {
+			if (event.type == gamejs.event.MOUSE_DOWN) {
+				c++;
+				if (c >= 4) {
+					gamejs.time.deleteCallback(tick, 20);
+	        afficheMenu();
+				}
+			}
+		});		
+
+		mainSurface.clear();
+		mainSurface.blit(aide[c]);
+	}
+
+	gamejs.time.fpsCallback(tick, this, 20);
+}
+
 function credits() {
 	var mainSurface = gamejs.display.getSurface();
 	var credit = gamejs.image.load("images/credits.png");
@@ -58,13 +86,12 @@ function afficheMenu() {
 					choix = 2;
 				}
 			} else if (event.type == gamejs.event.MOUSE_DOWN) {
+				gamejs.time.deleteCallback(tick, 20);
 				if (choix == 0) {
-					gamejs.time.deleteCallback(tick, 20);
 					startGame();
 				} else if (choix == 1) {
-
+					aide();
 				} else {
-					gamejs.time.deleteCallback(tick, 20);
 					credits();
 				}
 			}
@@ -123,6 +150,10 @@ function main() {
 }
 
 gamejs.preload(["images/menu.png",
+								"images/aide1.png",
+								"images/aide2.png",
+								"images/aide3.png",
+								"images/aide4.png",
 								"images/credits.png",
 								"images/seringue.png",
 								"images/carte_eur.png",
