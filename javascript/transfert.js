@@ -11,6 +11,12 @@ exports.Transfert = function(depart, arrivee, stock, isTraitement) {
 	this.isTraitement = isTraitement;
 	this.tempsDepart = Date.now();
 
+	if (isTraitement) {
+		depart.stockTraitements -= stock;
+	} else {
+		depart.stockVaccins -= stock;
+	}
+
 	var d1 = distance.distance_sens1(depart.rect.center, arrivee.rect.center);
 	var d2 = distance.distance_sens2(depart.rect.center, arrivee.rect.center);
 	this.direct = d1 <= d2;
