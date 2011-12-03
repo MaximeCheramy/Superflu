@@ -69,8 +69,8 @@ exports.Ville.prototype.update_habitants = function(msDuration) {
 	var mortalite = 0.0000005;
 	
 	// Les stocks se perdent :(
-	this.stockVaccins = Math.round(this.stockVaccins * Math.pow(0.9995, Math.floor(msDuration / 10)));
-	this.stockTraitements = Math.round(this.stockTraitements * Math.pow(0.9997, Math.floor(msDuration / 10)));
+	this.stockVaccins = Math.round(this.stockVaccins * Math.pow(0.995, Math.floor(msDuration / 10)));
+	this.stockTraitements = Math.round(this.stockTraitements * Math.pow(0.997, Math.floor(msDuration / 10)));
 
 	if( habitants > 0) {
 		

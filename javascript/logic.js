@@ -2,7 +2,10 @@ var gamejs = require('gamejs');
 var draw = require('gamejs/draw');
 var carte = require('carte');
 
+var POURCENTAGE_ECHEC = 0.01;
+
 exports.GameLogic = function() {
+	this.level = 1;
 	this.populationInfectee = 0;
 	this.populationMondiale = 0;
 	this.populationMorte = 0;
@@ -18,6 +21,15 @@ exports.GameLogic.prototype.update = function(deltaTime) {
 	if (!this.gameStarted) {
 		this.lancerEpidemie(500);
 		this.gameStarted = true;
+	}
+
+	if (this.populationInfectee < 200) {
+		this.level++;
+		this.lancerEpidemie(this.level * 500);
+	}
+
+	if (this.populationMorte >= (this.populationMondiale + this.populationMorte)*POURCENTAGE_ECHEC) {
+		// Perdu !
 	}
 };
 
