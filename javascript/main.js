@@ -3,6 +3,7 @@ var draw = require('gamejs/draw');
 var carte = require('carte');
 var logic = require('logic');
 var events = require('events');
+var ia = require('ia');
 
 function buildMap() {
 	var map = gamejs.image.load("images/carte.png");
@@ -151,6 +152,8 @@ function startGame() {
 
 	gamejs.time.fpsCallback(tick, this, 20);
 	gamejs.time.fpsCallback(updateLogic, this, 2);
+
+	//var cpu = new ia.IA(gameLogic, gTransferts);
 }
 
 function main() {
