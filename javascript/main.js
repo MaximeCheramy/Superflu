@@ -21,6 +21,25 @@ function buildMap() {
 	return background;
 }
 
+function credits() {
+	var mainSurface = gamejs.display.getSurface();
+	var credit = gamejs.image.load("images/credits.png");
+	function tick() {
+		var events = gamejs.event.get();
+		events.forEach(function(event) {
+			if (event.type == gamejs.event.MOUSE_DOWN) {
+				gamejs.time.deleteCallback(tick, 20);
+				afficheMenu();
+			}
+		});
+
+		mainSurface.clear();
+		mainSurface.blit(credit);
+	}
+
+	gamejs.time.fpsCallback(tick, this, 20);
+}
+
 function afficheMenu() {
 	var mainSurface = gamejs.display.getSurface();
 	var menu = gamejs.image.load("images/menu.png");
@@ -42,6 +61,11 @@ function afficheMenu() {
 				if (choix == 0) {
 					gamejs.time.deleteCallback(tick, 20);
 					startGame();
+				} else if (choix == 1) {
+
+				} else {
+					gamejs.time.deleteCallback(tick, 20);
+					credits();
 				}
 			}
 		});
@@ -99,6 +123,7 @@ function main() {
 }
 
 gamejs.preload(["images/menu.png",
+								"images/credits.png",
 								"images/seringue.png",
 								"images/carte_eur.png",
 								"images/carte_us.png",
