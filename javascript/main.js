@@ -21,9 +21,43 @@ function buildMap() {
 	return background;
 }
 
-function main() {
-	var display = gamejs.display.setMode([1024, 545]);
-	gamejs.display.setCaption("SuperFlu");
+function afficheMenu() {
+	var mainSurface = gamejs.display.getSurface();
+	var menu = gamejs.image.load("images/menu.png");
+	var seringue = gamejs.image.load("images/seringue.png");
+	var choix = 0;
+
+	function tick() {
+		var events = gamejs.event.get();
+		events.forEach(function(event) {
+			if (event.type === gamejs.event.MOUSE_MOTION) {
+				if(event.pos[1] > 238 && event.pos[1] < 238 + 96) {
+					choix = 0;
+				} else if(event.pos[1] > 238+96 && event.pos[1] < 238+2*96) {
+					choix = 1;
+				} else if(event.pos[1] > 238+2*96 && event.pos[1] < 238+3*96) {
+					choix = 2;
+				}
+			} else if (event.type == gamejs.event.MOUSE_DOWN) {
+				if (choix == 0) {
+					gamejs.time.deleteCallback(tick, 20);
+					startGame();
+				}
+			}
+		});
+
+		mainSurface.clear();
+		mainSurface.blit(menu);
+		var transp = 0.85 + 0.5*Math.sin(2*Math.PI*((Date.now()%1000))/1000);
+		seringue.setAlpha(1 - transp);
+		mainSurface.blit(seringue, [168, 248 + choix * 100]);
+	}
+
+	 gamejs.time.fpsCallback(tick, this, 20);
+}
+
+function startGame() {
+	document.body.style.backgroundImage = "url('images/fond_carte.png')";
 	var gameLogic = new logic.GameLogic();
 
 	var mainSurface = gamejs.display.getSurface();
@@ -58,8 +92,15 @@ function main() {
 	gamejs.time.fpsCallback(updateLogic, this, 2);
 }
 
+function main() {
+	var display = gamejs.display.setMode([1024, 545]);
+	gamejs.display.setCaption("SuperFlu");
+	afficheMenu();
+}
 
-gamejs.preload(["images/carte_eur.png",
+gamejs.preload(["images/menu.png",
+								"images/seringue.png",
+								"images/carte_eur.png",
 								"images/carte_us.png",
 								"images/carte_ams.png",
 								"images/carte_afr.png",
