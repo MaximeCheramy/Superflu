@@ -52,20 +52,30 @@ function aide() {
 function credits() {
 	var mainSurface = gamejs.display.getSurface();
 	var credit = gamejs.image.load("images/credits.png");
+
+	var dna = Array();
+	for (var i = 0; i < 10; i++) {
+		dna[i] = gamejs.image.load("images/dna" + (i + 1) + ".png");
+	}
+
+	var c = 0;
+
 	function tick() {
 		var events = gamejs.event.get();
 		events.forEach(function(event) {
 			if (event.type == gamejs.event.MOUSE_DOWN) {
-				gamejs.time.deleteCallback(tick, 20);
+				gamejs.time.deleteCallback(tick, 15);
 				afficheMenu();
 			}
 		});
 
 		mainSurface.clear();
 		mainSurface.blit(credit);
+		mainSurface.blit(dna[c++], [500, 100]);
+		c %= 10;
 	}
 
-	gamejs.time.fpsCallback(tick, this, 20);
+	gamejs.time.fpsCallback(tick, this, 15);
 }
 
 function afficheMenu() {
@@ -150,6 +160,16 @@ function main() {
 }
 
 gamejs.preload(["images/menu.png",
+								"images/dna1.png",
+								"images/dna2.png",
+								"images/dna3.png",
+								"images/dna4.png",
+								"images/dna5.png",
+								"images/dna6.png",
+								"images/dna7.png",
+								"images/dna8.png",
+								"images/dna9.png",
+								"images/dna10.png",
 								"images/aide1.png",
 								"images/aide2.png",
 								"images/aide3.png",
