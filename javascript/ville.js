@@ -37,7 +37,6 @@ exports.Ville = function(gameLogic, usine, zone, nom, x, y) {
 gamejs.utils.objects.extend(exports.Ville, gamejs.sprite.Sprite);
 
 exports.Ville.prototype.update = function(msDuration) {
-	this.highlight();
 	this.produit(msDuration);
 	this.update_habitants(msDuration);
 };
@@ -137,6 +136,7 @@ exports.Ville.prototype.update_habitants = function(msDuration) {
 };
 
 exports.Ville.prototype.draw = function(surface) {
+	this.highlight();
 	surface.blit(this.image, this.rect);
 
 	// Barre de contamination
