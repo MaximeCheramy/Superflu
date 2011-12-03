@@ -8,12 +8,17 @@ exports.GameLogic = function() {
 	this.populationMorte = 0;
 	this.targetedVille = null;
 	this.carte = new carte.Carte(this);
+	this.gameStarted = false;
 	return this;
 };
 
 exports.GameLogic.prototype.update = function(deltaTime) {
 	this.updatePopulation();
 	this.carte.update(deltaTime);
+	if (!this.gameStarted) {
+		this.lancerEpidemie(500);
+		this.gameStarted = true;
+	}
 };
 
 exports.GameLogic.prototype.updatePopulation = function() {
