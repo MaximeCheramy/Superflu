@@ -8,7 +8,7 @@ var isTraitement = true;
 var pourcentageVoulu = 0.2;
 var selectedVille = null;
 
-exports.eventManager = function(gameLogic, lineSurface, gTransferts) {
+exports.eventManager = function(gameLogic, infoVilleSurface, lineSurface, gTransferts) {
 	var events = gamejs.event.get();
 	events.forEach(function(event) {
 		var update = false;
@@ -44,8 +44,12 @@ exports.eventManager = function(gameLogic, lineSurface, gTransferts) {
 				villesHL = villesHL.concat(gameLogic.carte.zones[i].gVilles.collidePoint(event.pos));
 			}
 			if (villesHL.length > 0) {
-				gameLogic.targetedVille = villesHL[0];
+				if (gameLogic.targetedVille != villesHL[0]) {
+					villesHL[0].drawInfos(infoVilleSurface);
+					gameLogic.targetedVille = villesHL[0];
+				}
 			} else {
+				infoVilleSurface.clear();
 				gameLogic.targetedVille = null;
 			}
 

@@ -129,6 +129,7 @@ function startGame() {
 
 	var background = buildMap();
 	var lineSurface = new gamejs.Surface(1024, 545);
+	var infoVilleSurface = new gamejs.Surface(1024, 545);
 
 	var c = 0;
 
@@ -137,13 +138,14 @@ function startGame() {
 		mainSurface.clear();
 		mainSurface.blit(background);
 
-		events.eventManager(gameLogic, lineSurface, gTransferts);
+		events.eventManager(gameLogic, infoVilleSurface, lineSurface, gTransferts);
 		
 		gameLogic.draw(mainSurface);
 
 		gTransferts.update(msDuration);
 		gTransferts.draw(mainSurface);
 		mainSurface.blit(lineSurface);
+		mainSurface.blit(infoVilleSurface);
 	};
 
 	function updateLogic(msDuration) {
@@ -153,7 +155,7 @@ function startGame() {
 	gamejs.time.fpsCallback(tick, this, 20);
 	gamejs.time.fpsCallback(updateLogic, this, 2);
 
-	//var cpu = new ia.IA(gameLogic, gTransferts);
+	var cpu = new ia.IA(gameLogic, gTransferts);
 }
 
 function main() {
