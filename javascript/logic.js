@@ -2,6 +2,7 @@ var gamejs = require('gamejs');
 var draw = require('gamejs/draw');
 var carte = require('carte');
 
+var font = new gamejs.font.Font('16px Arial, Helvetica, sans-serif');
 var POURCENTAGE_ECHEC = 0.01;
 
 exports.GameLogic = function() {
@@ -31,6 +32,10 @@ exports.GameLogic.prototype.update = function(deltaTime) {
 	if (this.populationMorte >= (this.populationMondiale + this.populationMorte)*POURCENTAGE_ECHEC) {
 		// Perdu !
 	}
+
+	if (this.level >= 10) {
+		// Gagné !
+	}
 };
 
 exports.GameLogic.prototype.updatePopulation = function() {
@@ -46,6 +51,8 @@ exports.GameLogic.prototype.updatePopulation = function() {
 
 exports.GameLogic.prototype.draw = function(surface) {
 	this.carte.draw(surface);
+	
+	surface.blit(font.render("Level " + this.level, '#3333ff'), [750, 10]);
 };
 
 exports.GameLogic.prototype.lancerEpidemie = function(nombre) {
