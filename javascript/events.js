@@ -13,9 +13,11 @@ exports.eventManager = function(gameLogic, infoVilleSurface, lineSurface, gTrans
 	events.forEach(function(event) {
 		var update = false;
 		if (event.type === gamejs.event.MOUSE_DOWN) {
-			mouseDown = true;
-			isTraitement = (event.button == 0);
-			selectedVille = gameLogic.targetedVille;
+			if (gameLogic.targetedVille == null || gameLogic.targetedVille.player == 0) {
+				mouseDown = true;
+				isTraitement = (event.button == 0);
+				selectedVille = gameLogic.targetedVille;
+			}
 		} else if (event.type === gamejs.event.MOUSE_UP) {
 			if (gameLogic.targetedVille != null && selectedVille != null && gameLogic.targetedVille != selectedVille) {
 				var quantite;

@@ -14,9 +14,9 @@ exports.Carte = function(gameLogic) {
 };
 
 exports.Carte.prototype.chargeZones = function() {
-	var i;
+	//var id;
 	for (id = 1; id <= 6; id++) {
-		this.zones.push(new zone.Zone(this.gameLogic, id));
+		this.zones.push(new zone.Zone(this.gameLogic, id, Math.floor((id - 1) / 3)));
 	}
 };
 
@@ -27,6 +27,22 @@ exports.Carte.prototype.update = function(deltaTime) {
 	}
 	this.migrations(deltaTime);
 };
+
+exports.Carte.prototype.buildMap = function() {
+	var map = gamejs.image.load("images/carte.png");
+
+	var background = new gamejs.Surface(1024, 545);
+	background.blit(map);
+
+	
+	for (var i = 1; i <= 6; i++) {
+		if (this.zones[i-1].owner == 0) {
+			background.blit(gamejs.image.load("images/zone" + i + ".png"));
+		}
+	}
+
+	return background;
+}
 
 exports.Carte.prototype.migrations = function(deltaTime) {
 	for (var idZ1 in this.zones) {

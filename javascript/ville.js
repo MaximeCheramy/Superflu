@@ -9,6 +9,7 @@ exports.Ville = function(gameLogic, usine, zone, nom, x, y) {
 	this.gameLogic = gameLogic;
 	this.isUsine = usine;
 	this.zone = zone;
+	this.player = zone.owner;
 	if (this.isUsine) {
 		this.imageVille = gamejs.image.load("images/usine.png");
 		this.imageVilleHL = gamejs.image.load("images/HL_usine.png");
@@ -16,6 +17,8 @@ exports.Ville = function(gameLogic, usine, zone, nom, x, y) {
 		this.imageVille = gamejs.image.load("images/ville.png");
 		this.imageVilleHL = gamejs.image.load("images/HL_ville.png");
 	}
+	this.imageVille.setAlpha(this.player == 0 ? 0 : 0.5);
+	this.imageVilleHL.setAlpha(this.player == 0 ? 0 : 0.5);
 	this.image = this.imageVille;
 	this.width = this.imageVille.getSize()[0];
 	this.height = this.imageVille.getSize()[1];
@@ -32,6 +35,7 @@ exports.Ville = function(gameLogic, usine, zone, nom, x, y) {
 	this.habitantsInfectes = 0;
 	this.habitantsImmunises = 0;
 	this.habitantsMorts = 0;
+
 
 	return this;
 };
@@ -143,14 +147,16 @@ exports.Ville.prototype.update_habitants = function(msDuration) {
 exports.Ville.prototype.drawInfos = function(infoVilleSurface) {
 	infoVilleSurface.clear();
 	infoVilleSurface.blit(font.render(this.nom, '#ffffff'), [0, 250]);
-	infoVilleSurface.blit(font.render("Population totale : " + this.getHabitants(), '#ffffff'), [0, 280]);
-	infoVilleSurface.blit(font.render("Population saine :", '#ffffff'), [0, 300]);
-	infoVilleSurface.blit(font.render("non vaccinée : " + this.getHabitantsSains(), '#ffffff'), [40, 320]);
-	infoVilleSurface.blit(font.render("immunisée : " + this.getHabitantsImmunises(), '#ffffff'), [40, 340]);
-	infoVilleSurface.blit(font.render("Population malade : " + this.getHabitantsInfectes(), '#ffffff'), [0, 360]);
-	infoVilleSurface.blit(font.render("Nombre de morts : " + this.getHabitantsMorts(), '#ffffff'), [0, 380]);
-	infoVilleSurface.blit(font.render("Stocks traitements : " + this.stockTraitements, '#ffffff'), [0, 410]);
-	infoVilleSurface.blit(font.render("Stocks vaccins : " + this.stockVaccins, '#ffffff'), [0, 430]);
+	if (this.player == 0) {
+		infoVilleSurface.blit(font.render("Population totale : " + this.getHabitants(), '#ffffff'), [0, 280]);
+		infoVilleSurface.blit(font.render("Population saine :", '#ffffff'), [0, 300]);
+		infoVilleSurface.blit(font.render("non vaccinée : " + this.getHabitantsSains(), '#ffffff'), [40, 320]);
+		infoVilleSurface.blit(font.render("immunisée : " + this.getHabitantsImmunises(), '#ffffff'), [40, 340]);
+		infoVilleSurface.blit(font.render("Population malade : " + this.getHabitantsInfectes(), '#ffffff'), [0, 360]);
+		infoVilleSurface.blit(font.render("Nombre de morts : " + this.getHabitantsMorts(), '#ffffff'), [0, 380]);
+		infoVilleSurface.blit(font.render("Stocks traitements : " + this.stockTraitements, '#ffffff'), [0, 410]);
+		infoVilleSurface.blit(font.render("Stocks vaccins : " + this.stockVaccins, '#ffffff'), [0, 430]);
+	}
 };
 
 exports.Ville.prototype.draw = function(surface) {

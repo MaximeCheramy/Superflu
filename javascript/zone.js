@@ -2,9 +2,10 @@ var gamejs = require('gamejs');
 var draw = require('gamejs/draw');
 var ville = require('ville');
 
-exports.Zone = function(gameLogic, id) {
+exports.Zone = function(gameLogic, id, playerId) {
 	this.id = id;
 	this.gameLogic = gameLogic;
+	this.owner = playerId;
 	this.nbVilles = 0;
 	this.populationInfectee = 0;
 	this.population = 0;
