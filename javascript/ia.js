@@ -10,6 +10,10 @@ exports.IA = function(gameLogic, gTransferts, playerId) {
 	return this;
 };
 
+exports.IA.prototype.stop = function() {
+	gamejs.time.deleteCallback(this.doTurn, 1);
+};
+
 exports.IA.prototype.doTurn = function() {
 	var villeA = null;
 	var maxTraitements = -1;

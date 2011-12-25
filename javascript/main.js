@@ -131,14 +131,22 @@ function startGame() {
 		mainSurface.blit(infoVilleSurface);
 	};
 
+	var cpu;
+
 	function updateLogic(msDuration) {
-		gameLogic.update(msDuration);
+		if (gameLogic.state == null) {
+			gameLogic.update(msDuration);
+		} else {
+			gamejs.time.deleteCallback(updateLogic, 2);
+			cpu.stop();
+			alert(gameLogic.state);
+		}
 	}
 
 	gamejs.time.fpsCallback(tick, this, 20);
 	gamejs.time.fpsCallback(updateLogic, this, 2);
 
-	var cpu = new ia.IA(gameLogic, gTransferts, 1);
+	cpu = new ia.IA(gameLogic, gTransferts, 1);
 }
 
 function main() {

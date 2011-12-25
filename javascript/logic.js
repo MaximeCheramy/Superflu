@@ -3,7 +3,7 @@ var draw = require('gamejs/draw');
 var carte = require('carte');
 
 var font = new gamejs.font.Font('16px Arial, Helvetica, sans-serif');
-var POURCENTAGE_ECHEC = 0.01;
+var POURCENTAGE_ECHEC = 0.001;
 
 exports.GameLogic = function() {
 	this.level = 1;
@@ -13,6 +13,7 @@ exports.GameLogic = function() {
 	this.targetedVille = null;
 	this.carte = new carte.Carte(this);
 	this.gameStarted = false;
+	this.state = null;
 	return this;
 };
 
@@ -29,12 +30,12 @@ exports.GameLogic.prototype.update = function(deltaTime) {
 		this.lancerEpidemie(this.level * 500);
 	}
 
-	if (this.populationMorte >= (this.populationMondiale + this.populationMorte)*POURCENTAGE_ECHEC) {
-		// Perdu !
+	if (this.populationMorte > (this.populationMondiale + this.populationMorte)*POURCENTAGE_ECHEC) {
+		this.state = "PERDU";
 	}
 
 	if (this.level >= 10) {
-		// Gagné !
+		this.state = "GAGNE";
 	}
 };
 
