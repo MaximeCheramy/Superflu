@@ -138,8 +138,15 @@ function startGame() {
 			gameLogic.update(msDuration);
 		} else {
 			gamejs.time.deleteCallback(updateLogic, 2);
+			gamejs.time.deleteCallback(tick, 20);
 			cpu.stop();
-			alert(gameLogic.state);
+			if (gameLogic.state == "PERDU") {
+				var perdu = gamejs.image.load("images/gameover.png");
+				mainSurface.blit(perdu, [337, 180]);
+			} else {
+				var gagne = gamejs.image.load("images/victory.png");
+				mainSurface.blit(gagne, [337, 180]);
+			}
 		}
 	}
 
@@ -156,6 +163,8 @@ function main() {
 }
 
 gamejs.preload(["images/menu.png",
+								"images/victory.png",
+								"images/gameover.png",
 								"images/dna1.png",
 								"images/dna2.png",
 								"images/dna3.png",
