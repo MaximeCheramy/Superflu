@@ -72,7 +72,7 @@ exports.Ville.prototype.update_habitants = function(msDuration) {
 	var habitants = this.habitantsSains + this.habitantsInfectes + this.habitantsImmunises;
 	
 	// Ces données devraient pouvoir varier en fonction du virus
-	var transmission = 0.00015;
+	var transmission = 0.00025;
 	var perteImmunite = 0.000001;
 	var mortalite = 0.0000005;
 	

@@ -25,9 +25,11 @@ exports.GameLogic.prototype.update = function(deltaTime) {
 		this.gameStarted = true;
 	}
 
-	if (this.populationInfectee < 200) {
+	if (this.populationInfectee < 200 && this.level < 10) {
 		this.level++;
 		this.lancerEpidemie(this.level * 500);
+	} else if (this.populationInfectee < 100) {
+		this.level++;
 	}
 
 	if (this.populationMorte > (this.populationMondiale + this.populationMorte)*POURCENTAGE_ECHEC) {

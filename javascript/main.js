@@ -146,7 +146,7 @@ function startGame() {
 	gamejs.time.fpsCallback(tick, this, 20);
 	gamejs.time.fpsCallback(updateLogic, this, 2);
 
-	cpu = new ia.IA(gameLogic, gTransferts, 1);
+	cpu = new ia.IA("EASY", gameLogic, gTransferts, 1);
 }
 
 function main() {
