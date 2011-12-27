@@ -16,12 +16,12 @@ function aide() {
 
 	function tick() {
 		var events = gamejs.event.get();
-    events.forEach(function(event) {
+		events.forEach(function(event) {
 			if (event.type == gamejs.event.MOUSE_DOWN) {
 				c++;
 				if (c >= 4) {
 					gamejs.time.deleteCallback(tick, 20);
-	        afficheMenu();
+					afficheMenu();
 				}
 			}
 		});		
@@ -82,7 +82,7 @@ function afficheMenu() {
 			} else if (event.type == gamejs.event.MOUSE_DOWN) {
 				gamejs.time.deleteCallback(tick, 20);
 				if (choix == 0) {
-					startGame();
+					menuDifficulty();
 				} else if (choix == 1) {
 					aide();
 				} else {
@@ -95,13 +95,60 @@ function afficheMenu() {
 		mainSurface.blit(menu);
 		var transp = 0.85 + 0.5*Math.sin(2*Math.PI*((Date.now()%1000))/1000);
 		seringue.setAlpha(1 - transp);
-		mainSurface.blit(seringue, [168, 248 + choix * 100]);
+		mainSurface.blit(seringue, [168, 248 + choix * 96]);
 	}
 
 	 gamejs.time.fpsCallback(tick, this, 20);
 }
 
-function startGame() {
+function menuDifficulty() {
+	var mainSurface = gamejs.display.getSurface();
+	var menu = gamejs.image.load("images/menu2.png");
+	var seringue = gamejs.image.load("images/seringue.png");
+	
+	var choix = 0;
+
+	function tick() {
+		var events = gamejs.event.get();
+		events.forEach(function(event) {
+			if (event.type === gamejs.event.MOUSE_MOTION) {
+				if (event.pos[1] > 60 && event.pos[1] < 60 + 110) {
+					choix = 0;
+				} else if (event.pos[1] > 60+110 && event.pos[1] < 60+2*110) {
+					choix = 1;
+				} else if (event.pos[1] > 60+2*110 && event.pos[1] < 60+3*110) {
+					choix = 2;
+				} else if (event.pos[1] > 60+3*110 && event.pos[1] < 60+4*110) {
+					choix = 3;
+				}
+			} else if (event.type == gamejs.event.MOUSE_DOWN) {
+				gamejs.time.deleteCallback(tick, 20);
+				if (choix == 0) {
+					startGame("EASY");
+				} else if (choix == 1) {
+					startGame("MEDIUM");
+				} else if (choix == 2) {
+					startGame("HARD");
+				} else {
+					afficheMenu();
+				}
+			}
+		});
+		mainSurface.clear();
+		mainSurface.blit(menu);
+		var transp = 0.85 + 0.5*Math.sin(2*Math.PI*((Date.now()%1000))/1000);
+		seringue.setAlpha(1 - transp);
+		if (choix <= 2) {
+			mainSurface.blit(seringue, [72, 72 + choix * 112]);
+		} else {
+			mainSurface.blit(seringue, [584, 456]);
+		}
+	}
+
+	gamejs.time.fpsCallback(tick, this, 20);
+}
+
+function startGame(level) {
 	document.body.style.backgroundImage = "url('images/fond_carte.png')";
 	var gameLogic = new logic.GameLogic();
 
@@ -153,7 +200,7 @@ function startGame() {
 	gamejs.time.fpsCallback(tick, this, 20);
 	gamejs.time.fpsCallback(updateLogic, this, 2);
 
-	cpu = new ia.IA("EASY", gameLogic, gTransferts, 1);
+	cpu = new ia.IA(level, gameLogic, gTransferts, 1);
 }
 
 function main() {
@@ -163,6 +210,7 @@ function main() {
 }
 
 gamejs.preload(["images/menu.png",
+								"images/menu2.png",
 								"images/victory.png",
 								"images/gameover.png",
 								"images/dna1.png",
