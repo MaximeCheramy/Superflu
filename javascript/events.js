@@ -62,6 +62,8 @@ exports.eventManager = function(gameLogic, infoVilleSurface, lineSurface, gTrans
 					selectedVille = gameLogic.targetedVille;
 				}
 			}
+		} else if (event.type === gamejs.event.KEY_DOWN && event.key == 80) {
+			gameLogic.state = "PAUSE";
 		}
 
 		// On met à jour l'affichage du trait et du cercle de pourcentage à envoyer.

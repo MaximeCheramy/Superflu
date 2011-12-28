@@ -193,6 +193,22 @@ function startGame(level) {
 	function updateLogic(msDuration) {
 		if (gameLogic.state == null) {
 			gameLogic.update(msDuration);
+		} else if (gameLogic.state == "PAUSE") {
+			// FIXME! Le msDuration semble prendre une grosse valeur...
+			gamejs.time.deleteCallback(updateLogic, 2);
+			gamejs.time.deleteCallback(tick, 20);
+			cpu.stop();
+			function waitEvent() {
+				var e = gamejs.event.poll();
+				if (e && e.type == gamejs.event.MOUSE_DOWN) {
+					gameLogic.state = null;
+					gamejs.time.deleteCallback(waitEvent, 10);
+					gamejs.time.fpsCallback(tick, this, 20);
+					gamejs.time.fpsCallback(updateLogic, this, 2);
+					cpu.start();
+				}
+			}
+			gamejs.time.fpsCallback(waitEvent, this, 10);
 		} else {
 			gamejs.time.deleteCallback(updateLogic, 2);
 			gamejs.time.deleteCallback(tick, 20);
@@ -206,7 +222,7 @@ function startGame(level) {
 			}
 			function waitEvent() {
 				var e = gamejs.event.poll();
-				if (e.type == gamejs.event.MOUSE_DOWN) {
+				if (e && e.type == gamejs.event.MOUSE_DOWN) {
 					gamejs.time.deleteCallback(waitEvent, 10);
 					afficheMenu();
 				}

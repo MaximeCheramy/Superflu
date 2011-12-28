@@ -7,9 +7,14 @@ exports.IA = function(level, gameLogic, gTransferts, playerId) {
 	this.playerId = playerId;
 	this.level = level;
 	this.counter = 0;
-	gamejs.time.fpsCallback(this.doTurn, this, 1);
+
+	this.start();
 
 	return this;
+};
+
+exports.IA.prototype.start = function() {
+	gamejs.time.fpsCallback(this.doTurn, this, 1);
 };
 
 exports.IA.prototype.stop = function() {
