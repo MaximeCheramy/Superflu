@@ -14,15 +14,13 @@ exports.Carte = function(gameLogic) {
 };
 
 exports.Carte.prototype.chargeZones = function() {
-	//var id;
-	for (id = 1; id <= 6; id++) {
+	for (var id = 1; id <= 6; id++) {
 		this.zones.push(new zone.Zone(this.gameLogic, id, Math.floor((id - 1) / 3)));
 	}
 };
 
 exports.Carte.prototype.update = function(deltaTime) {
-	var id;
-	for (id = 1; id <= 6; id++) {
+	for (var id = 1; id <= 6; id++) {
 		this.zones[id-1].update(deltaTime);
 	}
 	this.migrations(deltaTime);

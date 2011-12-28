@@ -17,7 +17,7 @@ exports.Zone = function(gameLogic, id, playerId) {
 exports.Zone.prototype.chargeVilles = function() {
 	this.gVilles = new gamejs.sprite.Group();
 
-	var filepath = "zones/zone" + id + ".data";
+	var filepath = "zones/zone" + this.id + ".data";
 	lines = gamejs.http.get(filepath).responseText.split("\n");
 
 	this.nom = lines.shift();
