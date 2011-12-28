@@ -59,8 +59,8 @@ exports.GameLogic.prototype.draw = function(surface) {
 };
 
 exports.GameLogic.prototype.lancerEpidemie = function(nombre) {
-	var i = Math.round(Math.random()*6);
-	var j = Math.round(Math.random()*this.carte.zones[i].nbVilles);
+	var i = Math.floor(Math.random()*6);
+	var j = Math.floor(Math.random()*this.carte.zones[i].nbVilles);
 	
 	//XXX Moche moche moche
 	this.carte.zones[i].gVilles._sprites[j].habitantsInfectes = nombre;
