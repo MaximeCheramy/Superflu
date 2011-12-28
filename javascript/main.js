@@ -105,6 +105,8 @@ function menuDifficulty() {
 	var mainSurface = gamejs.display.getSurface();
 	var menu = gamejs.image.load("images/menu2.png");
 	var seringue = gamejs.image.load("images/seringue.png");
+	var font = new gamejs.font.Font('20px Arial, Helvetica, sans-serif');
+	var msgInfo = null;
 	
 	var choix = 0;
 
@@ -114,12 +116,16 @@ function menuDifficulty() {
 			if (event.type === gamejs.event.MOUSE_MOTION) {
 				if (event.pos[1] > 60 && event.pos[1] < 60 + 110) {
 					choix = 0;
+					msgInfo = font.render("L'ordinateur joue de manière coopérative en vous aidant si nécessaire.", '#ffffff');
 				} else if (event.pos[1] > 60+110 && event.pos[1] < 60+2*110) {
 					choix = 1;
+					msgInfo = font.render("L'ordinateur ne s'occupe que de ses villes.", '#ffffff');
 				} else if (event.pos[1] > 60+2*110 && event.pos[1] < 60+3*110) {
 					choix = 2;
+					msgInfo = font.render("L'ordinateur ne s'occupe que de ses villes et aura besoin de votre aide.", '#ffffff');
 				} else if (event.pos[1] > 60+3*110 && event.pos[1] < 60+4*110) {
 					choix = 3;
+					msgInfo = font.render("Retour au menu principal.", '#ffffff');
 				}
 			} else if (event.type == gamejs.event.MOUSE_DOWN) {
 				gamejs.time.deleteCallback(tick, 20);
@@ -142,6 +148,9 @@ function menuDifficulty() {
 			mainSurface.blit(seringue, [72, 72 + choix * 112]);
 		} else {
 			mainSurface.blit(seringue, [584, 456]);
+		}
+		if (msgInfo != null) {
+			mainSurface.blit(msgInfo, [60, 482]);
 		}
 	}
 
