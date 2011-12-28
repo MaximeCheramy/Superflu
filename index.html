@@ -11,10 +11,11 @@
            padding:0;
         }
         #gjs-loader {
-						margin: auto;
-            width: 50%;
-            height: 50%;
-            background: url('./public/ajax-loader.gif');
+					position: absolute;
+					left: 50%;
+					top: 50%;
+					margin-left: -100px;
+					margin-top: -25px;
         }
     </style>
 <!-- Start javascript/main.js -->
@@ -28,9 +29,7 @@
 <!-- Html -->
 <body oncontextmenu="return false;">
     <div>
-        <div id="gjs-loader">
-         Chargement...
-        </div>
+				<img id="gjs-loader" src="./images/loading.png" alt="Loading..."/>
 				<div style="text-align: center;">
 					<canvas id="gjs-canvas"></canvas>
 				</div>
