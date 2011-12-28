@@ -63,6 +63,7 @@ function credits() {
 }
 
 function afficheMenu() {
+	document.body.style.backgroundImage = "none";
 	var mainSurface = gamejs.display.getSurface();
 	var menu = gamejs.image.load("images/menu.png");
 	var seringue = gamejs.image.load("images/seringue.png");
@@ -203,6 +204,14 @@ function startGame(level) {
 				var gagne = gamejs.image.load("images/victory.png");
 				mainSurface.blit(gagne, [337, 180]);
 			}
+			function waitEvent() {
+				var e = gamejs.event.poll();
+				if (e.type == gamejs.event.MOUSE_DOWN) {
+					gamejs.time.deleteCallback(waitEvent, 10);
+					afficheMenu();
+				}
+			}
+			gamejs.time.fpsCallback(waitEvent, this, 10);
 		}
 	}
 
