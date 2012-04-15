@@ -97,7 +97,7 @@ exports.Ville.prototype.update_habitants = function(msDuration) {
 		}
 		
 		// Utilisation des traitements
-		if (this.stockTraitementsMax > 0) {
+		if (this.stockTraitements > 0) {
 				var nouveauxHabitantsImmunises = Math.min(this.habitantsInfectes, this.stockTraitements);
 				this.stockTraitements -= nouveauxHabitantsImmunises;
 				this.habitantsInfectes -= nouveauxHabitantsImmunises;
